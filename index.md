@@ -6,12 +6,6 @@ header:
   overlay_image: /assets/images/Header.jpg  
 ---
 ```python
-my_client_id = 'b731995fc93042c680a78197273207e4'
-my_client_secret='f8954ebd207e41eba7e0a22fe7f2eff4'
-```
-
-
-```python
 import pandas as pd
 import numpy as np
 
