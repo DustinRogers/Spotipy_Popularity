@@ -5,6 +5,7 @@ excerpt: Predicting a song's popularity in Spotipy!
 header:
   overlay_image: /assets/images/Header.jpg  
 ---
+
 ```python
 import pandas as pd
 import numpy as np
@@ -2213,7 +2214,8 @@ var x = new MutationObserver(function (mutations, observer) {{
             console.log([gd, 'removed!']);
             Plotly.purge(gd);
             observer.disconnect();
-}}
+        }}
+}});
 
 // Listen for the removal of the full notebook cells
 var notebookContainer = gd.closest('#notebook-container');
@@ -2714,7 +2716,6 @@ plt.show()
 
 
 ![png](Spotipy_Popularity_files/Spotipy_Popularity_31_0.png)
-
 
 
 [Return to my portfolio](https://dustinrogers.github.io/)
