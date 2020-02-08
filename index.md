@@ -2213,8 +2213,7 @@ var x = new MutationObserver(function (mutations, observer) {{
             console.log([gd, 'removed!']);
             Plotly.purge(gd);
             observer.disconnect();
-        }}
-}});
+}}
 
 // Listen for the removal of the full notebook cells
 var notebookContainer = gd.closest('#notebook-container');
