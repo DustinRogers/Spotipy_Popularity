@@ -1,0 +1,1071 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Spotipy\_Popularity}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{176}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{my\PYZus{}client\PYZus{}id} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b731995fc93042c680a78197273207e4}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{my\PYZus{}client\PYZus{}secret}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f8954ebd207e41eba7e0a22fe7f2eff4}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{177}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{k+kn}{import} \PY{n+nn}{spotipy}
+\PY{k+kn}{from} \PY{n+nn}{spotipy}\PY{n+nn}{.}\PY{n+nn}{oauth2} \PY{k}{import} \PY{n}{SpotifyClientCredentials}
+\PY{k+kn}{import} \PY{n+nn}{spotipy}\PY{n+nn}{.}\PY{n+nn}{util} \PY{k}{as} \PY{n+nn}{util}
+
+\PY{n}{username} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{drogers771}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{scope}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{n}{ccm} \PY{o}{=} \PY{n}{SpotifyClientCredentials}\PY{p}{(}\PY{n}{client\PYZus{}id}\PY{o}{=}\PY{n}{my\PYZus{}client\PYZus{}id}\PY{p}{,}
+                               \PY{n}{client\PYZus{}secret}\PY{o}{=}\PY{n}{my\PYZus{}client\PYZus{}secret}\PY{p}{)}
+
+\PY{n}{my\PYZus{}token} \PY{o}{=} \PY{n}{util}\PY{o}{.}\PY{n}{prompt\PYZus{}for\PYZus{}user\PYZus{}token}\PY{p}{(}\PY{n}{username}\PY{p}{,}
+                           \PY{n}{scope}\PY{p}{,}
+                           \PY{n}{client\PYZus{}id}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b731995fc93042c680a78197273207e4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                           \PY{n}{client\PYZus{}secret}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f8954ebd207e41eba7e0a22fe7f2eff4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                           \PY{n}{redirect\PYZus{}uri}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{http://localhost:8889}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{178}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Let\PYZsq{}s pick a popular artist}
+\PY{n}{artist} \PY{o}{=} \PY{n}{get\PYZus{}artist}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The Beatles}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{180}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Grab all the albums for our artist above}
+\PY{k+kn}{from} \PY{n+nn}{spotipy}\PY{n+nn}{.}\PY{n+nn}{oauth2} \PY{k}{import} \PY{n}{SpotifyClientCredentials}
+\PY{k+kn}{import} \PY{n+nn}{sys}
+\PY{k+kn}{import} \PY{n+nn}{spotipy}
+
+\PY{n}{sp} \PY{o}{=} \PY{n}{spotipy}\PY{o}{.}\PY{n}{Spotify}\PY{p}{(}\PY{n}{client\PYZus{}credentials\PYZus{}manager}\PY{o}{=}\PY{n}{ccm}\PY{p}{)}
+
+\PY{k}{def} \PY{n+nf}{get\PYZus{}artist}\PY{p}{(}\PY{n}{name}\PY{p}{)}\PY{p}{:}
+    \PY{n}{results} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{search}\PY{p}{(}\PY{n}{q}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{artist:}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{name}\PY{p}{,} \PY{n+nb}{type}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{artist}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{market}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{US}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{items} \PY{o}{=} \PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{artists}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{items}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+    \PY{k}{return} \PY{n}{items}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+
+
+\PY{n}{albums} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{results} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{artist\PYZus{}albums}\PY{p}{(}\PY{n}{artist}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{album\PYZus{}type}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{album}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{albums}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{items}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{k}{while} \PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{next}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+    \PY{n}{results} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{next}\PY{p}{(}\PY{n}{results}\PY{p}{)}
+    \PY{n}{albums}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{items}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    
+\PY{n}{unique} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{album\PYZus{}id} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+
+\PY{k}{for} \PY{n}{album} \PY{o+ow}{in} \PY{n}{albums}\PY{p}{:}
+    \PY{n}{name} \PY{o}{=} \PY{n}{album}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}
+    \PY{n}{id\PYZus{}name} \PY{o}{=} \PY{n}{album}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+    \PY{k}{if} \PY{n}{name} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{unique}\PY{p}{:}
+        \PY{n}{unique}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{name}\PY{p}{)}
+        \PY{n}{album\PYZus{}id}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{id\PYZus{}name}\PY{p}{)}
+ 
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total albums on Spotify:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{unique}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Total albums on Spotify: 23
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{181}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Grab all the songs on each of their albums}
+\PY{n}{tracks} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{ids} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Artist}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Album}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Track}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Track\PYZus{}Length}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{album\PYZus{}id}\PY{p}{:}
+    \PY{n}{results} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{album\PYZus{}tracks}\PY{p}{(}\PY{n}{album\PYZus{}id}\PY{o}{=}\PY{n}{i}\PY{p}{)}
+    \PY{n}{tracks}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{items}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{k}{while} \PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{next}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+    \PY{n}{results} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{next}\PY{p}{(}\PY{n}{results}\PY{p}{)}
+    \PY{n}{tracks}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{items}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{k}{for} \PY{n}{track} \PY{o+ow}{in} \PY{n}{tracks}\PY{p}{:}
+    \PY{n}{ids}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{track}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Track}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{track}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Artist}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{track}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{artists}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Track\PYZus{}Length}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{track}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{duration\PYZus{}ms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{/}\PY{l+m+mi}{60000}\PY{p}{)}   
+    
+\PY{n}{df\PYZus{}tracks} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Artist}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Artist}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Track}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track Length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Track\PYZus{}Length}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track ID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{ids}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{df\PYZus{}tracks}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(534, 4)
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{182}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Go back and grab some features such as when the album was released and tracks\PYZsq{} popularity}
+\PY{n}{temp}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Artist}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Album\PYZus{}ID}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Album}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Album\PYZus{}Release}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Track}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Track\PYZus{}ID}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+\PY{n}{Popularity}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{df\PYZus{}tracks}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track ID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+    \PY{n}{results} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{track}\PY{p}{(}\PY{n}{track\PYZus{}id}\PY{o}{=}\PY{n}{row}\PY{p}{)}
+    \PY{n}{temp}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{results}\PY{p}{)}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{temp}\PY{p}{:}
+    \PY{n}{Artist}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{artists}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Album}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{album}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Album\PYZus{}ID}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{album}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Album\PYZus{}Release}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{album}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{release\PYZus{}date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Track}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Track\PYZus{}ID}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Popularity}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{popularity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{n}{df\PYZus{}albums} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Artist}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Artist}\PY{p}{,}
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Album}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Album}\PY{p}{,}
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Album ID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Album\PYZus{}ID}\PY{p}{,}
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Album Release}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Album\PYZus{}Release}\PY{p}{,}
+                           \PY{c+c1}{\PYZsh{}\PYZsq{}Track\PYZsq{}:Track,}
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track ID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Track\PYZus{}ID}\PY{p}{,}
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Popularity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Popularity}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{df\PYZus{}albums}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+retrying {\ldots}1secs
+retrying {\ldots}1secs
+retrying {\ldots}1secs
+(534, 6)
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{183}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Grab features of each song like Energy, Loudness, etc.}
+\PY{n}{audio} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Danceability} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Energy} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Key} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Loudness} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Speechiness} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Acousticness} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Instrumentalness} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Liveness} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Valence} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{Tempo} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{track\PYZus{}id} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{ids}\PY{p}{:}
+    \PY{n}{results} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{audio\PYZus{}features}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+    \PY{n}{audio}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{results}\PY{p}{)} 
+\PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{audio}\PY{p}{)}\PY{p}{:}
+    \PY{n}{track\PYZus{}id}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Danceability}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{danceability}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Energy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{energy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Key}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{key}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Loudness}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loudness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Speechiness}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{speechiness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Acousticness}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{acousticness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Instrumentalness}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{instrumentalness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Liveness}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{liveness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Valence}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{valence}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n}{Tempo}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{j}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tempo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+    
+\PY{n}{df\PYZus{}audio} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track ID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{track\PYZus{}id}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Danceability}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Danceability}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Energy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Energy}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Key}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Key}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Loudness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Loudness}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Speechiness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Speechiness}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Acousticness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Acousticness}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Instrumentalness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Instrumentalness}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Liveness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Liveness}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Valence}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Valence}\PY{p}{,}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tempo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{Tempo}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{df\PYZus{}audio}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+retrying {\ldots}2secs
+retrying {\ldots}1secs
+retrying {\ldots}2secs
+(534, 11)
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{184}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Merge the previous two dataframes}
+\PY{n}{df} \PY{o}{=} \PY{n}{df\PYZus{}tracks}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{df\PYZus{}audio}\PY{p}{,}\PY{n}{on}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track ID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{df\PYZus{}albums}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track ID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{185}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{185}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+      Artist\_x                               Track  Track Length  \textbackslash{}
+0  The Beatles            Come Together - 2019 Mix      4.336667
+1  The Beatles                Something - 2019 Mix      3.037100
+2  The Beatles  Maxwell's Silver Hammer - 2019 Mix      3.466217
+3  The Beatles              Oh! Darling - 2019 Mix      3.452433
+4  The Beatles         Octopus's Garden - 2019 Mix      2.846667
+
+                 Track ID  Danceability  Energy  Key  Loudness  Speechiness  \textbackslash{}
+0  6lSxM9BKcEZBSDKl2VODsF         0.536   0.360    9   -10.973       0.0408
+1  3S6N0Wbem9KV3DBcYNfXuv         0.416   0.385    0    -9.388       0.0279
+2  0fnY9xlLJCgtBUBX9rNzDJ         0.816   0.386    2    -9.443       0.0382
+3  3UHv8SSIkNUDRBUHJx3Cg6         0.437   0.669    4    -6.524       0.0395
+4  3e1w0Wm0sH8nUYPArDkBG3         0.565   0.645    1    -6.194       0.0332
+
+   Acousticness  Instrumentalness  Liveness  Valence    Tempo     Artist\_y  \textbackslash{}
+0        0.0823          0.167000    0.0996    0.147  164.891  The Beatles
+1        0.0958          0.000005    0.2280    0.458  133.298  The Beatles
+2        0.4970          0.000093    0.3090    0.708  131.099  The Beatles
+3        0.0344          0.003950    0.3470    0.514  173.670  The Beatles
+4        0.1130          0.000625    0.1240    0.626   92.253  The Beatles
+
+                               Album                Album ID Album Release  \textbackslash{}
+0  Abbey Road (Super Deluxe Edition)  5iT3F2EhjVQVrO4PKhsP8c    2019-09-27
+1  Abbey Road (Super Deluxe Edition)  5iT3F2EhjVQVrO4PKhsP8c    2019-09-27
+2  Abbey Road (Super Deluxe Edition)  5iT3F2EhjVQVrO4PKhsP8c    2019-09-27
+3  Abbey Road (Super Deluxe Edition)  5iT3F2EhjVQVrO4PKhsP8c    2019-09-27
+4  Abbey Road (Super Deluxe Edition)  5iT3F2EhjVQVrO4PKhsP8c    2019-09-27
+
+   Popularity
+0          57
+1          56
+2          54
+3          55
+4          53
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{186}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create new feature for year the album was released.}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Release Year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Album Release}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{str}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{str}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{187}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Attempting to get all trackname to be written the same way. Some have (Live) or \PYZsq{}\PYZhy{} Live\PYZsq{}. Additionally, some tracks were just}
+\PY{c+c1}{\PYZsh{} entering incorrectly in Spotify.}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track\PYZus{}New}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{str}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{[| }\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{(}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{str}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{expand} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{str}\PY{o}{.}\PY{n}{rstrip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{str}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}
+\PY{n}{df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track\PYZus{}New}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track Length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{display.max\PYZus{}rows}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track\PYZus{}New}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track\PYZus{}New}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{187}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+count                                       534
+unique                                      275
+top       sgt. pepper's lonely hearts club band
+freq                                         11
+Name: Track\_New, dtype: object
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{193}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline 
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{197}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{fig1} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{jointplot}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{summary\PYZus{}df}\PY{p}{[}\PY{n}{summary\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number\PYZus{}of\PYZus{}Times\PYZus{}on\PYZus{}Spotify}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+                     \PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number\PYZus{}of\PYZus{}Times\PYZus{}on\PYZus{}Spotify}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean\PYZus{}Track\PYZus{}Length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{fig1}\PY{o}{.}\PY{n}{ax\PYZus{}joint}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{} of Times Song Appears on Spotify}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{fig1}\PY{o}{.}\PY{n}{ax\PYZus{}joint}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Song Length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{197}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(27.125, 0.5, 'Average Song Length')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    
+    \begin{verbatim}
+<Figure size 720x432 with 0 Axes>
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Spotipy_Popularity_files/Spotipy_Popularity_12_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{275}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{plotly} \PY{k}{import} \PY{n}{\PYZus{}\PYZus{}version\PYZus{}\PYZus{}}
+\PY{k+kn}{from} \PY{n+nn}{plotly}\PY{n+nn}{.}\PY{n+nn}{offline} \PY{k}{import} \PY{n}{download\PYZus{}plotlyjs}\PY{p}{,} \PY{n}{init\PYZus{}notebook\PYZus{}mode}\PY{p}{,} \PY{n}{plot}\PY{p}{,} \PY{n}{iplot} 
+\PY{k+kn}{import} \PY{n+nn}{cufflinks} \PY{k}{as} \PY{n+nn}{cf}
+
+\PY{c+c1}{\PYZsh{} Set notebook mode to work in offline}
+\PY{n}{pyo}\PY{o}{.}\PY{n}{init\PYZus{}notebook\PYZus{}mode}\PY{p}{(}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} For offline use}
+\PY{n}{cf}\PY{o}{.}\PY{n}{go\PYZus{}offline}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        NameError                                 Traceback (most recent call last)
+
+        <ipython-input-275-05753da37cbd> in <module>
+          4 
+          5 \# Set notebook mode to work in offline
+    ----> 6 pyo.init\_notebook\_mode()
+          7 \# For offline use
+          8 cf.go\_offline()
+    
+
+        NameError: name 'pyo' is not defined
+
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{276}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{plotly}\PY{n+nn}{.}\PY{n+nn}{express} \PY{k}{as} \PY{n+nn}{px}
+\PY{n}{fig} \PY{o}{=} \PY{n}{px}\PY{o}{.}\PY{n}{box}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Release Year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track Length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{fig}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{277}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{fig} \PY{o}{=} \PY{n}{px}\PY{o}{.}\PY{n}{histogram}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Popularity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{nbins}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{fig}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{278}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{278}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+       Track Length  Danceability      Energy         Key    Loudness  \textbackslash{}
+count    534.000000    534.000000  534.000000  534.000000  534.000000
+mean       2.728576      0.532137    0.520512    4.715356  -10.588633
+std        1.286471      0.155006    0.211224    3.426181    3.717782
+min        0.172667      0.000000    0.012400    0.000000  -27.456000
+25\%        2.126550      0.422250    0.357750    2.000000  -11.917500
+50\%        2.601667      0.541000    0.531000    4.000000   -9.874000
+75\%        3.148721      0.642500    0.672500    7.000000   -8.333000
+max       16.174433      0.915000    0.969000   11.000000   -3.199000
+
+       Speechiness  Acousticness  Instrumentalness    Liveness     Valence  \textbackslash{}
+count   534.000000    534.000000        534.000000  534.000000  534.000000
+mean      0.092637      0.399164          0.061139    0.252632    0.623287
+std       0.183298      0.311577          0.183754    0.215810    0.257750
+min       0.000000      0.000023          0.000000    0.037100    0.000000
+25\%       0.032625      0.096100          0.000000    0.105000    0.427500
+50\%       0.039750      0.346000          0.000007    0.160500    0.665000
+75\%       0.055975      0.679000          0.001158    0.324000    0.840000
+max       0.954000      0.979000          0.942000    0.948000    0.980000
+
+            Tempo  Popularity
+count  534.000000  534.000000
+mean   120.045039   42.357678
+std     29.716396   15.208043
+min      0.000000    0.000000
+25\%     96.962000   30.000000
+50\%    121.255500   43.000000
+75\%    137.203250   53.000000
+max    209.242000   81.000000
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{279}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{corr\PYZus{}df} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+\PY{n}{corr\PYZus{}df}\PY{o}{.}\PY{n}{iplot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{colorscale}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blues}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{280}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{sns}\PY{o}{.}\PY{n}{pairplot}\PY{p}{(}\PY{n}{df}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{280}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<seaborn.axisgrid.PairGrid at 0x19d5580ba88>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Spotipy_Popularity_files/Spotipy_Popularity_18_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{281}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Release Year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Release Year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{str}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{282}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{prettytable} \PY{k}{import} \PY{n}{PrettyTable}
+\PY{c+c1}{\PYZsh{} Sklearn model selection}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{RandomizedSearchCV}
+\PY{c+c1}{\PYZsh{} Sklearn metrics}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{,} \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{,} \PY{n}{mean\PYZus{}squared\PYZus{}log\PYZus{}error}
+\PY{c+c1}{\PYZsh{} Sklearn models}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{Lasso}\PY{p}{,} \PY{n}{ElasticNet}\PY{p}{,} \PY{n}{Ridge}\PY{p}{,} \PY{n}{SGDRegressor}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{svm} \PY{k}{import} \PY{n}{SVR}\PY{p}{,} \PY{n}{NuSVR}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k}{import} \PY{n}{BaggingRegressor}\PY{p}{,} \PY{n}{RandomForestRegressor}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{neighbors} \PY{k}{import} \PY{n}{KNeighborsClassifier}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{cluster} \PY{k}{import} \PY{n}{KMeans}
+
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k}{import} \PY{n}{RandomForestClassifier}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k}{import} \PY{n}{GradientBoostingClassifier}
+
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{LinearRegression}
+
+\PY{k+kn}{import} \PY{n+nn}{random}
+
+\PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+
+\PY{c+c1}{\PYZsh{} Make results reproducible}
+\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{283}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{columns}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{283}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Index(['Artist\_x', 'Track', 'Track Length', 'Track ID', 'Danceability',
+       'Energy', 'Key', 'Loudness', 'Speechiness', 'Acousticness',
+       'Instrumentalness', 'Liveness', 'Valence', 'Tempo', 'Artist\_y', 'Album',
+       'Album ID', 'Album Release', 'Popularity', 'Release Year', 'Track\_New'],
+      dtype='object')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{284}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{x\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Track Length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Danceability}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Energy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Key}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Loudness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Speechiness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Acousticness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Instrumentalness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Liveness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Valence}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tempo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Release Year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{y\PYZus{}column} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Popularity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{285}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{model\PYZus{}df}\PY{p}{[}\PY{n}{x\PYZus{}columns}\PY{p}{]}\PY{p}{,} 
+                                                    \PY{n}{y\PYZus{}column}\PY{p}{,} 
+                                                    \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{,} 
+                                                    \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{286}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{table} \PY{o}{=} \PY{n}{PrettyTable}\PY{p}{(}\PY{p}{)}
+\PY{n}{table}\PY{o}{.}\PY{n}{field\PYZus{}names} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Model}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Mean Squared Error}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{R² score}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+
+\PY{n}{models} \PY{o}{=} \PY{p}{[}
+    \PY{n}{Lasso}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{)}\PY{p}{,}
+    \PY{n}{ElasticNet}\PY{p}{(}\PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}
+    \PY{n}{Ridge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,}
+    \PY{n}{SVR}\PY{p}{(}\PY{n}{gamma}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{auto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+    \PY{n}{SVR}\PY{p}{(}\PY{n}{gamma}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{auto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+    \PY{n}{BaggingRegressor}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+    \PY{n}{BaggingRegressor}\PY{p}{(}\PY{n}{KNeighborsClassifier}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{max\PYZus{}samples}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{max\PYZus{}features}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{,}
+    \PY{n}{NuSVR}\PY{p}{(}\PY{n}{gamma}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{auto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+    \PY{n}{RandomForestRegressor}\PY{p}{(} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{n\PYZus{}estimators}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{)}
+\PY{p}{]}
+
+\PY{k}{for} \PY{n}{model} \PY{o+ow}{in} \PY{n}{models}\PY{p}{:}
+    \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)} 
+    \PY{n}{y\PYZus{}res} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+
+    \PY{n}{mse} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}res}\PY{p}{)}
+    \PY{n}{score} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}    
+
+    \PY{n}{table}\PY{o}{.}\PY{n}{add\PYZus{}row}\PY{p}{(}\PY{p}{[}\PY{n+nb}{type}\PY{p}{(}\PY{n}{model}\PY{p}{)}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}}\PY{p}{,} \PY{n+nb}{format}\PY{p}{(}\PY{n}{mse}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n+nb}{format}\PY{p}{(}\PY{n}{score}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{table}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++-----------------------+--------------------+----------+
+|         Model         | Mean Squared Error | R² score |
++-----------------------+--------------------+----------+
+|         Lasso         |       168.41       |   0.36   |
+|       ElasticNet      |       186.42       |   0.29   |
+|         Ridge         |       165.64       |   0.37   |
+|          SVR          |       173.50       |   0.34   |
+|          SVR          |       253.98       |   0.04   |
+|    BaggingRegressor   |       93.84        |   0.64   |
+|    BaggingRegressor   |       185.11       |   0.30   |
+|         NuSVR         |       255.73       |   0.03   |
+| RandomForestRegressor |       73.69        |   0.72   |
++-----------------------+--------------------+----------+
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{287}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Table setup}
+\PY{n}{table} \PY{o}{=} \PY{n}{PrettyTable}\PY{p}{(}\PY{p}{)}
+\PY{n}{table}\PY{o}{.}\PY{n}{field\PYZus{}names} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Model}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Dataset}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MSE}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MAE}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSLE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{R² score}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{c+c1}{\PYZsh{} Model training}
+\PY{n}{model} \PY{o}{=} \PY{n}{RandomForestRegressor}\PY{p}{(}\PY{n}{bootstrap}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{criterion}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mse}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,}
+           \PY{n}{max\PYZus{}features}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{auto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{max\PYZus{}leaf\PYZus{}nodes}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,}
+           \PY{n}{min\PYZus{}impurity\PYZus{}decrease}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{min\PYZus{}impurity\PYZus{}split}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,}
+           \PY{n}{min\PYZus{}samples\PYZus{}leaf}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{min\PYZus{}samples\PYZus{}split}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,}
+           \PY{n}{min\PYZus{}weight\PYZus{}fraction\PYZus{}leaf}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{n\PYZus{}estimators}\PY{o}{=}\PY{l+m+mi}{200}\PY{p}{,} \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,}
+           \PY{n}{oob\PYZus{}score}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{warm\PYZus{}start}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)} 
+
+\PY{k}{def} \PY{n+nf}{evaluate}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{dataset}\PY{p}{)}\PY{p}{:}
+    \PY{n}{pred} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+
+    \PY{n}{mse} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{pred}\PY{p}{)}
+    \PY{n}{mae} \PY{o}{=} \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{pred}\PY{p}{)}
+    \PY{n}{score} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}    
+    \PY{n}{rmsle} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{mean\PYZus{}squared\PYZus{}log\PYZus{}error}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{pred}\PY{p}{)}\PY{p}{)}
+
+    \PY{n}{table}\PY{o}{.}\PY{n}{add\PYZus{}row}\PY{p}{(}\PY{p}{[}\PY{n+nb}{type}\PY{p}{(}\PY{n}{model}\PY{p}{)}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}}\PY{p}{,} \PY{n}{dataset}\PY{p}{,} \PY{n+nb}{format}\PY{p}{(}\PY{n}{mse}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n+nb}{format}\PY{p}{(}\PY{n}{mae}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n+nb}{format}\PY{p}{(}\PY{n}{rmsle}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n+nb}{format}\PY{p}{(}\PY{n}{score}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+    
+
+\PY{n}{evaluate}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{training}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{evaluate}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{validation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{table}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++-----------------------+------------+-------+------+-------+----------+
+|         Model         |  Dataset   |  MSE  | MAE  | RMSLE | R² score |
++-----------------------+------------+-------+------+-------+----------+
+| RandomForestRegressor |  training  | 11.63 | 2.59 |  0.18 |   0.95   |
+| RandomForestRegressor | validation | 76.71 | 6.48 |  0.45 |   0.71   |
++-----------------------+------------+-------+------+-------+----------+
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{288}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Check out feature importance}
+\PY{n}{importances} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{feature\PYZus{}importances\PYZus{}}
+\PY{n}{std} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{p}{[}\PY{n}{tree}\PY{o}{.}\PY{n}{feature\PYZus{}importances\PYZus{}} \PY{k}{for} \PY{n}{tree} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{estimators\PYZus{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n}{indices} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{n}{importances}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{289}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Print the feature ranking}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Feature ranking:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{. feature }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ (}\PY{l+s+si}{\PYZpc{}f}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{f} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{x\PYZus{}columns}\PY{p}{[}\PY{n}{indices}\PY{p}{[}\PY{n}{f}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{importances}\PY{p}{[}\PY{n}{indices}\PY{p}{[}\PY{n}{f}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Feature ranking:
+1. feature Track Length (0.240360)
+2. feature Release Year (0.238638)
+3. feature Loudness (0.125620)
+4. feature Speechiness (0.119721)
+5. feature Valence (0.051093)
+6. feature Acousticness (0.050590)
+7. feature Danceability (0.034979)
+8. feature Liveness (0.034512)
+9. feature Energy (0.034045)
+10. feature Tempo (0.030140)
+11. feature Instrumentalness (0.023457)
+12. feature Key (0.016845)
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{290}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Plot the feature importances of the forest}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Feature importances}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{importances}\PY{p}{[}\PY{n}{indices}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cornflowerblue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{yerr}\PY{o}{=}\PY{n}{std}\PY{p}{[}\PY{n}{indices}\PY{p}{]}\PY{p}{,} \PY{n}{align}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{center}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{p}{[}\PY{n}{x\PYZus{}columns}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{indices}\PY{p}{]}\PY{p}{,}\PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{45}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Spotipy_Popularity_files/Spotipy_Popularity_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
