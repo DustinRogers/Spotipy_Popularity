@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ---
 classes: wide
 title: " "
@@ -7,6 +6,7 @@ header:
   overlay_image: /assets/images/Header.jpg  
 ---
 
+#### Import all packages and authenticate Spotipy credentials
 ```python
 import pandas as pd
 import numpy as np
