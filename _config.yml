@@ -4,7 +4,7 @@ classes: wide
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Ensemble Modeling in R"
+title                    : "Spotipy API"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Dustin Rogers"
