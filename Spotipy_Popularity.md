@@ -1,10 +1,11 @@
-```python
-my_client_id = 'b731995fc93042c680a78197273207e4'
-my_client_secret='f8954ebd207e41eba7e0a22fe7f2eff4'
-```
-
-#### Import all packages and authenticate Spotipy credentials
-
+<<<<<<< HEAD
+---
+classes: wide
+title: " "
+excerpt: Using Spotipy to predict song popularity!
+header:
+  overlay_image: /assets/images/Header.jpg  
+---
 
 ```python
 import pandas as pd
