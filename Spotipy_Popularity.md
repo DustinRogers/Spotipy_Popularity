@@ -3,9 +3,10 @@ my_client_id = 'b731995fc93042c680a78197273207e4'
 my_client_secret='f8954ebd207e41eba7e0a22fe7f2eff4'
 ```
 
+#### Import all packages and authenticate Spotipy credentials
+
 
 ```python
-# Import all packages and authenticate Spotipy credentials
 import pandas as pd
 import numpy as np
 
@@ -26,10 +27,10 @@ my_token = util.prompt_for_user_token(username,
                            redirect_uri='http://localhost:8889')
 ```
 
+#### Let's pick a popular artist. This time we will look at The Beatles
+
 
 ```python
-# Let's pick a popular artist. This time we will look at The Beatles
-
 from spotipy.oauth2 import SpotifyClientCredentials
 import sys
 import spotipy
@@ -44,9 +45,10 @@ def get_artist(name):
 artist = get_artist('The Beatles')
 ```
 
+#### Grab all the albums for our artist above
+
 
 ```python
-# Grab all the albums for our artist above
 albums = []
 results = sp.artist_albums(artist['id'], album_type='album')
 albums.extend(results['items'])
@@ -72,9 +74,10 @@ print('Total albums on Spotify:', len(unique))
     Total albums on Spotify: 23
     
 
+#### Grab all the songs on each of their albums
+
 
 ```python
-# Grab all the songs on each of their albums
 tracks = []
 ids = []
 Artist=[]
@@ -104,9 +107,10 @@ print(df_tracks.shape)
     (534, 4)
     
 
+#### Go back and grab some features such as when the album was released and tracks' popularity
+
 
 ```python
-# Go back and grab some features such as when the album was released and tracks' popularity
 temp=[]
 Artist=[]
 Album_ID=[]
@@ -137,14 +141,15 @@ df_albums = pd.DataFrame({'Artist':Artist,
 print(df_albums.shape)
 ```
 
-    retrying ...2secs
-    retrying ...2secs
+    retrying ...1secs
+    retrying ...1secs
     (534, 6)
     
 
+#### Grab features of each song like Energy, Loudness, etc.
+
 
 ```python
-# Grab features of each song like Energy, Loudness, etc.
 audio = []
 Danceability = []
 Energy = []
@@ -188,22 +193,26 @@ df_audio = pd.DataFrame({'Track ID': track_id,
 print(df_audio.shape)
 ```
 
-    retrying ...2secs
-    retrying ...2secs
-    retrying ...2secs
+    retrying ...1secs
+    retrying ...1secs
+    retrying ...1secs
+    retrying ...1secs
     (534, 11)
     
 
+#### Merge the previous two dataframes
+
 
 ```python
-# Merge the previous two dataframes
 df = df_tracks.merge(df_audio,on='Track ID')
 df = df.merge(df_albums, on='Track ID')
 ```
 
+#### Show the first five entries of the dataset
+
 
 ```python
-df.head()
+df
 ```
 
 
@@ -313,7 +322,7 @@ df.head()
       <td>Abbey Road (Super Deluxe Edition)</td>
       <td>5iT3F2EhjVQVrO4PKhsP8c</td>
       <td>2019-09-27</td>
-      <td>54</td>
+      <td>53</td>
     </tr>
     <tr>
       <td>3</td>
@@ -359,22 +368,156 @@ df.head()
       <td>2019-09-27</td>
       <td>53</td>
     </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>529</td>
+      <td>The Beatles</td>
+      <td>Baby It's You - Remastered 2009</td>
+      <td>2.675333</td>
+      <td>2VmB1rF9FtfKUmFHDVnq8Q</td>
+      <td>0.608</td>
+      <td>0.494</td>
+      <td>4</td>
+      <td>-12.211</td>
+      <td>0.0345</td>
+      <td>0.7780</td>
+      <td>0.000000</td>
+      <td>0.0926</td>
+      <td>0.879</td>
+      <td>112.421</td>
+      <td>The Beatles</td>
+      <td>Please Please Me (Remastered)</td>
+      <td>3KzAvEXcqJKBF97HrXwlgf</td>
+      <td>1963-03-22</td>
+      <td>58</td>
+    </tr>
+    <tr>
+      <td>530</td>
+      <td>The Beatles</td>
+      <td>Do You Want To Know A Secret - Remastered 2009</td>
+      <td>1.950217</td>
+      <td>7Aobt67JnaF7qN8jCCKvHq</td>
+      <td>0.673</td>
+      <td>0.349</td>
+      <td>4</td>
+      <td>-12.414</td>
+      <td>0.0368</td>
+      <td>0.6080</td>
+      <td>0.000000</td>
+      <td>0.3800</td>
+      <td>0.609</td>
+      <td>124.451</td>
+      <td>The Beatles</td>
+      <td>Please Please Me (Remastered)</td>
+      <td>3KzAvEXcqJKBF97HrXwlgf</td>
+      <td>1963-03-22</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <td>531</td>
+      <td>The Beatles</td>
+      <td>A Taste Of Honey - Remastered 2009</td>
+      <td>2.058000</td>
+      <td>7fh53ta3vAOGJMQ4i5tCHe</td>
+      <td>0.420</td>
+      <td>0.372</td>
+      <td>1</td>
+      <td>-11.416</td>
+      <td>0.0327</td>
+      <td>0.6980</td>
+      <td>0.000000</td>
+      <td>0.1040</td>
+      <td>0.412</td>
+      <td>101.408</td>
+      <td>The Beatles</td>
+      <td>Please Please Me (Remastered)</td>
+      <td>3KzAvEXcqJKBF97HrXwlgf</td>
+      <td>1963-03-22</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <td>532</td>
+      <td>The Beatles</td>
+      <td>There's A Place - Remastered 2009</td>
+      <td>1.841550</td>
+      <td>4dessGxnKXmTbHPhVgqODq</td>
+      <td>0.455</td>
+      <td>0.582</td>
+      <td>4</td>
+      <td>-10.009</td>
+      <td>0.0292</td>
+      <td>0.6290</td>
+      <td>0.000004</td>
+      <td>0.1720</td>
+      <td>0.927</td>
+      <td>140.928</td>
+      <td>The Beatles</td>
+      <td>Please Please Me (Remastered)</td>
+      <td>3KzAvEXcqJKBF97HrXwlgf</td>
+      <td>1963-03-22</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <td>533</td>
+      <td>The Beatles</td>
+      <td>Twist And Shout - Remastered 2009</td>
+      <td>2.587100</td>
+      <td>5ZBeML7Lf3FMEVviTyvi8l</td>
+      <td>0.482</td>
+      <td>0.849</td>
+      <td>2</td>
+      <td>-9.198</td>
+      <td>0.0452</td>
+      <td>0.6410</td>
+      <td>0.000008</td>
+      <td>0.0414</td>
+      <td>0.937</td>
+      <td>124.631</td>
+      <td>The Beatles</td>
+      <td>Please Please Me (Remastered)</td>
+      <td>3KzAvEXcqJKBF97HrXwlgf</td>
+      <td>1963-03-22</td>
+      <td>73</td>
+    </tr>
   </tbody>
 </table>
+<p>534 rows × 19 columns</p>
 </div>
 
 
 
+#### Create new feature for year the album was released.
+
 
 ```python
-# Create new feature for year the album was released.
 df['Release Year'] = df['Album Release'].str.split('-').str[0]
 ```
 
+#### Attempting to get all tracknames to be written the same way. Some have (Live) or '- Remastered 2009'. Additionally, some tracks were just entered incorrectly in Spotify.
+
 
 ```python
-# Attempting to get all trackname to be written the same way. Some have (Live) or '- Live'. Additionally, some tracks were just
-# entering incorrectly in Spotify.
 df['Track_New'] = df['Track'].str.replace(' \[| \(', '-').str.split('-',expand = True)[0].str.rstrip().str.lower()
 df.groupby('Track_New').mean()['Track Length']
 
@@ -382,7 +525,6 @@ pd.set_option('display.max_rows', df.shape[0]+1)
 df['Track_New'].value_counts()
 
 df['Track_New'].describe()
-
 ```
 
 
@@ -396,213 +538,78 @@ df['Track_New'].describe()
 
 
 
+#### It looks like there are a lot of duplicated songs. There may be some rereleases or greatest hits in the data that's causing songs to appear more than once.
+
 
 ```python
-import seaborn as sns
 import matplotlib.pyplot as plt
-%matplotlib inline 
+import seaborn as sns
+sns.set(style="darkgrid")
 ```
 
 
 ```python
 plt.figure(figsize=(10,6))
-sns.boxplot(x=df['Release Year'], y=df['Track Length'])
+a = sns.boxplot(x=df['Release Year'], y=df['Track Length'])
+a.set_prop_cycle(color=['blue'])
+```
+
+
+![png](Spotipy_Popularity_files/Spotipy_Popularity_23_0.png)
+
+
+#### Track length dramatically changes after 1966! It looks like a few albums were release after 1970. Let's see if the duplications go away when I remove thos albums.
+
+
+```python
+df = df[df['Release Year']<='1970']
+df['Track'].describe()
 ```
 
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x24547948548>
+    count                                            274
+    unique                                           244
+    top       She's Leaving Home - Take 1 / Instrumental
+    freq                                               2
+    Name: Track, dtype: object
 
-
-
-
-![png](Spotipy_Popularity_files/Spotipy_Popularity_12_1.png)
 
 
 
 ```python
-df.describe()
+plt.figure(figsize=(10,6))
+a=sns.boxplot(x=df['Release Year'], y=df['Track Length'])
+a.set_prop_cycle(color=['red'])
 ```
 
 
+![png](Spotipy_Popularity_files/Spotipy_Popularity_26_0.png)
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Track Length</th>
-      <th>Danceability</th>
-      <th>Energy</th>
-      <th>Key</th>
-      <th>Loudness</th>
-      <th>Speechiness</th>
-      <th>Acousticness</th>
-      <th>Instrumentalness</th>
-      <th>Liveness</th>
-      <th>Valence</th>
-      <th>Tempo</th>
-      <th>Popularity</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>count</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-      <td>534.000000</td>
-    </tr>
-    <tr>
-      <td>mean</td>
-      <td>2.728576</td>
-      <td>0.532137</td>
-      <td>0.520512</td>
-      <td>4.715356</td>
-      <td>-10.588633</td>
-      <td>0.092637</td>
-      <td>0.399164</td>
-      <td>0.061139</td>
-      <td>0.252632</td>
-      <td>0.623287</td>
-      <td>120.045039</td>
-      <td>42.357678</td>
-    </tr>
-    <tr>
-      <td>std</td>
-      <td>1.286471</td>
-      <td>0.155006</td>
-      <td>0.211224</td>
-      <td>3.426181</td>
-      <td>3.717782</td>
-      <td>0.183298</td>
-      <td>0.311577</td>
-      <td>0.183754</td>
-      <td>0.215810</td>
-      <td>0.257750</td>
-      <td>29.716396</td>
-      <td>15.208043</td>
-    </tr>
-    <tr>
-      <td>min</td>
-      <td>0.172667</td>
-      <td>0.000000</td>
-      <td>0.012400</td>
-      <td>0.000000</td>
-      <td>-27.456000</td>
-      <td>0.000000</td>
-      <td>0.000023</td>
-      <td>0.000000</td>
-      <td>0.037100</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <td>25%</td>
-      <td>2.126550</td>
-      <td>0.422250</td>
-      <td>0.357750</td>
-      <td>2.000000</td>
-      <td>-11.917500</td>
-      <td>0.032625</td>
-      <td>0.096100</td>
-      <td>0.000000</td>
-      <td>0.105000</td>
-      <td>0.427500</td>
-      <td>96.962000</td>
-      <td>30.000000</td>
-    </tr>
-    <tr>
-      <td>50%</td>
-      <td>2.601667</td>
-      <td>0.541000</td>
-      <td>0.531000</td>
-      <td>4.000000</td>
-      <td>-9.874000</td>
-      <td>0.039750</td>
-      <td>0.346000</td>
-      <td>0.000007</td>
-      <td>0.160500</td>
-      <td>0.665000</td>
-      <td>121.255500</td>
-      <td>43.000000</td>
-    </tr>
-    <tr>
-      <td>75%</td>
-      <td>3.148721</td>
-      <td>0.642500</td>
-      <td>0.672500</td>
-      <td>7.000000</td>
-      <td>-8.333000</td>
-      <td>0.055975</td>
-      <td>0.679000</td>
-      <td>0.001158</td>
-      <td>0.324000</td>
-      <td>0.840000</td>
-      <td>137.203250</td>
-      <td>53.000000</td>
-    </tr>
-    <tr>
-      <td>max</td>
-      <td>16.174433</td>
-      <td>0.915000</td>
-      <td>0.969000</td>
-      <td>11.000000</td>
-      <td>-3.199000</td>
-      <td>0.954000</td>
-      <td>0.979000</td>
-      <td>0.942000</td>
-      <td>0.948000</td>
-      <td>0.980000</td>
-      <td>209.242000</td>
-      <td>81.000000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+```python
+a=sns.distplot(df['Popularity'],bins=60)
+a.set_prop_cycle(color=['red'])
+```
 
 
+![png](Spotipy_Popularity_files/Spotipy_Popularity_27_0.png)
+
+
+#### Now, I want to take a look at how the features are correlated. It doesn't look like any of our features are highly correlated with our targe ' Popularity'
 
 
 ```python
 corr_df = df.corr()
 plt.figure(figsize=(10,6))
-sns.heatmap(corr_df, cmap="Blues")
+a=sns.heatmap(corr_df, cmap="Blues")
+a.set_prop_cycle(color=['red'])
 ```
 
 
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x2454e248348>
-
-
-
-
-![png](Spotipy_Popularity_files/Spotipy_Popularity_14_1.png)
+![png](Spotipy_Popularity_files/Spotipy_Popularity_29_0.png)
 
 
 
@@ -613,18 +620,29 @@ sns.pairplot(df)
 
 
 
-    <seaborn.axisgrid.PairGrid at 0x245347c0b08>
+    <seaborn.axisgrid.PairGrid at 0x1b456a84648>
 
 
 
 
-![png](Spotipy_Popularity_files/Spotipy_Popularity_15_1.png)
+![png](Spotipy_Popularity_files/Spotipy_Popularity_30_1.png)
 
 
 
 ```python
 df['Release Year'] = df['Release Year'].astype(str)
 ```
+
+    C:\Users\roger\Anaconda3\lib\site-packages\ipykernel_launcher.py:1: SettingWithCopyWarning: 
+    A value is trying to be set on a copy of a slice from a DataFrame.
+    Try using .loc[row_indexer,col_indexer] = value instead
+    
+    See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+      """Entry point for launching an IPython kernel.
+    
+
+### Modeling 
+#### Importing packages that I will need
 
 
 ```python
@@ -677,6 +695,8 @@ x_columns = ['Track Length', 'Danceability','Energy', 'Key', 'Loudness', 'Speech
 y_column = df['Popularity']
 ```
 
+#### Splitting data into training and testing sets
+
 
 ```python
 X_train, X_test, y_train, y_test = train_test_split(df[x_columns], 
@@ -684,6 +704,8 @@ X_train, X_test, y_train, y_test = train_test_split(df[x_columns],
                                                     test_size=0.2, 
                                                     random_state=42)
 ```
+
+#### Running the data through 9 different models to see which model predicts my test data
 
 
 ```python
@@ -717,17 +739,19 @@ print(table)
     +-----------------------+--------------------+----------+
     |         Model         | Mean Squared Error | R² score |
     +-----------------------+--------------------+----------+
-    |         Lasso         |       168.41       |   0.36   |
-    |       ElasticNet      |       186.42       |   0.29   |
-    |         Ridge         |       165.64       |   0.37   |
-    |          SVR          |       173.50       |   0.34   |
-    |          SVR          |       253.98       |   0.04   |
-    |    BaggingRegressor   |       89.05        |   0.66   |
-    |    BaggingRegressor   |       168.79       |   0.36   |
-    |         NuSVR         |       255.73       |   0.03   |
-    | RandomForestRegressor |       73.69        |   0.72   |
+    |         Lasso         |       162.69       |  -0.06   |
+    |       ElasticNet      |       174.85       |  -0.14   |
+    |         Ridge         |       163.65       |  -0.07   |
+    |          SVR          |       178.25       |  -0.16   |
+    |          SVR          |       167.16       |  -0.09   |
+    |    BaggingRegressor   |       156.23       |  -0.02   |
+    |    BaggingRegressor   |       260.56       |  -0.70   |
+    |         NuSVR         |       178.73       |  -0.16   |
+    | RandomForestRegressor |       117.07       |   0.24   |
     +-----------------------+--------------------+----------+
     
+
+#### The random forest model has the lowest MSE and highest R². Below I am going to see if I can improve on that model
 
 
 ```python
@@ -760,25 +784,27 @@ evaluate(X_test, y_test, 'validation')
 print(table)
 ```
 
-    +-----------------------+------------+-------+------+-------+----------+
-    |         Model         |  Dataset   |  MSE  | MAE  | RMSLE | R² score |
-    +-----------------------+------------+-------+------+-------+----------+
-    | RandomForestRegressor |  training  | 11.73 | 2.54 |  0.17 |   0.95   |
-    | RandomForestRegressor | validation | 74.07 | 6.38 |  0.44 |   0.72   |
-    +-----------------------+------------+-------+------+-------+----------+
+    +-----------------------+------------+--------+------+-------+----------+
+    |         Model         |  Dataset   |  MSE   | MAE  | RMSLE | R² score |
+    +-----------------------+------------+--------+------+-------+----------+
+    | RandomForestRegressor |  training  | 14.67  | 2.90 |  0.09 |   0.92   |
+    | RandomForestRegressor | validation | 119.15 | 8.50 |  0.21 |   0.22   |
+    +-----------------------+------------+--------+------+-------+----------+
     
+
+### Feature importance
 
 
 ```python
-# Check out feature importance
 importances = model.feature_importances_
 std = np.std([tree.feature_importances_ for tree in model.estimators_], axis=0)
 indices = np.argsort(importances)[::-1]
 ```
 
+#### Print the feature ranking
+
 
 ```python
-# Print the feature ranking
 print("Feature ranking:")
 
 for f in range(X_test.shape[1]):
@@ -786,23 +812,24 @@ for f in range(X_test.shape[1]):
 ```
 
     Feature ranking:
-    1. feature Release Year (0.242322)
-    2. feature Track Length (0.239267)
-    3. feature Loudness (0.131128)
-    4. feature Speechiness (0.110370)
-    5. feature Acousticness (0.055529)
-    6. feature Valence (0.045647)
-    7. feature Danceability (0.039548)
-    8. feature Energy (0.035050)
-    9. feature Liveness (0.033997)
-    10. feature Tempo (0.027743)
-    11. feature Instrumentalness (0.021994)
-    12. feature Key (0.017406)
+    1. feature Release Year (0.238756)
+    2. feature Speechiness (0.220008)
+    3. feature Loudness (0.097321)
+    4. feature Valence (0.069859)
+    5. feature Energy (0.058355)
+    6. feature Tempo (0.057656)
+    7. feature Acousticness (0.057093)
+    8. feature Danceability (0.050881)
+    9. feature Liveness (0.049203)
+    10. feature Track Length (0.038286)
+    11. feature Instrumentalness (0.033633)
+    12. feature Key (0.028948)
     
+
+#### Plot the feature importances of the forest
 
 
 ```python
-# Plot the feature importances of the forest
 plt.figure(figsize=(14,5))
 plt.title("Feature importances")
 plt.bar(range(X_test.shape[1]), importances[indices], color="cornflowerblue", yerr=std[indices], align="center")
@@ -812,7 +839,7 @@ plt.show()
 ```
 
 
-![png](Spotipy_Popularity_files/Spotipy_Popularity_25_0.png)
+![png](Spotipy_Popularity_files/Spotipy_Popularity_47_0.png)
 
 
 
